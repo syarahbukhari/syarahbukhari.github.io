@@ -103,6 +103,7 @@ const ICON = {
   play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>',
   down: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   open: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  full: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   share: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
 };
 
@@ -178,7 +179,7 @@ ${infaqSection(base)}
     <p class="foot-name">${esc(SITE)}</p>
     <p>Diringkaskan daripada <em>Shahih Bukhari bersama Terjemahan dan Ulasan</em> — Maulana Muhammad Asri Yusoff.</p>
     <p>${esc(tetapan.kredit || '')}${tetapan.hubungi ? ` · <a href="${esc(/^[^@\s]+@[^@\s]+$/.test(tetapan.hubungi) ? 'mailto:' + tetapan.hubungi : tetapan.hubungi)}">Hubungi kami</a>` : ''}</p>
-    <p class="foot-small">Semua ebook dan video di laman ini percuma untuk dibaca, dimuat turun dan dikongsi.</p>
+    <p class="foot-small">Semua ebook dan video di laman ini percuma untuk dibaca dan dikongsi.</p>
   </div>
 </footer>
 </body>
@@ -303,7 +304,6 @@ function ebookPage(k, e, i) {
   const prev = k.ebooks[i - 1];
   const next = k.ebooks[i + 1];
   const pdf = media(e.pdf, base);
-  const pdfName = `${SITE} - ${k.tajuk} - ${e.tajuk}.pdf`;
   const title = `${e.tajuk} — ${k.tajuk}`;
   const desc = e.ringkasan || e.subtajuk || `${e.tajuk}, ${k.tajuk}. Ebook dan video penerangan percuma.`;
 
@@ -315,12 +315,14 @@ function ebookPage(k, e, i) {
     ? `<div class="reader-bar">
         <span class="reader-title">${ICON.book} Baca ebook</span>
         <span class="reader-actions">
-          <a class="btn btn-plum" href="${esc(pdf)}" download="${esc(pdfName)}">${ICON.down}Muat turun PDF</a>
-          <a class="btn btn-ghost" href="${esc(pdf)}" target="_blank" rel="noopener">${ICON.open}Buka penuh</a>
+          <button type="button" class="btn btn-plum" id="reader-full">${ICON.full}Skrin penuh</button>
         </span>
       </div>
-      <div class="reader" id="reader" data-pdf="${esc(pdf)}">
-        <p class="reader-status" id="reader-status">Memuatkan ebook…</p>
+      <div class="reader-wrap" id="reader-wrap">
+        <div class="reader-fullbar"><span>${esc(e.tajuk)}</span><button type="button" class="btn btn-light" id="reader-close">Tutup ✕</button></div>
+        <div class="reader" id="reader" data-pdf="${esc(pdf)}">
+          <p class="reader-status" id="reader-status">Memuatkan ebook…</p>
+        </div>
       </div>`
     : `<div class="reader reader-empty"><span class="ve-icon">${ICON.book}</span><p>Ebook ini akan dimuat naik tidak lama lagi, insya-Allah.</p></div>`;
 

@@ -12,7 +12,7 @@ async function start() {
   try {
     doc = await pdfjsLib.getDocument({ url }).promise;
   } catch (err) {
-    status.innerHTML = 'Ebook tidak dapat dipaparkan di sini. Sila guna butang <b>Muat turun PDF</b> di atas.';
+    status.innerHTML = 'Ebook tidak dapat dipaparkan. Sila muat semula halaman ini atau cuba sebentar lagi.';
     console.error(err);
     return;
   }
@@ -69,5 +69,19 @@ async function start() {
     }, 250);
   });
 }
+
+// Skrin penuh dalam laman (berfungsi juga di iPhone)
+const wrap = document.getElementById('reader-wrap');
+const setFull = (on) => {
+  wrap.classList.toggle('is-full', on);
+  document.body.classList.toggle('no-scroll', on);
+  window.dispatchEvent(new Event('resize'));
+};
+document.getElementById('reader-full')?.addEventListener('click', () => setFull(true));
+document.getElementById('reader-close')?.addEventListener('click', () => setFull(false));
+document.addEventListener('keydown', (e) => e.key === 'Escape' && setFull(false));
+
+// Halang menu klik kanan / tekan lama pada halaman ebook
+box?.addEventListener('contextmenu', (e) => e.preventDefault());
 
 if (box) start();

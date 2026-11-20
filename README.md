@@ -2,7 +2,7 @@
 
 Laman web ebook ringkasan syarah Sahih al-Bukhari beserta video penerangan, diringkaskan daripada kitab *Shahih Bukhari bersama Terjemahan dan Ulasan* oleh Maulana Muhammad Asri Yusoff. Projek Teratak Hadits.
 
-Semua ebook boleh dibaca terus di laman (termasuk di telefon) dan dimuat turun secara percuma.
+Semua ebook boleh dibaca terus di laman (termasuk di telefon) secara percuma. Butang muat turun sengaja tidak disediakan atas permintaan Teratak Hadits.
 
 ## Struktur
 
