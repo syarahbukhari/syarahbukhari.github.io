@@ -97,3 +97,18 @@ collections:
           - { name: pengenalan, label: "Teks pengenalan (laman utama)", widget: text }
           - { name: kredit, label: "Kredit / penerbit", widget: string }
           - { name: hubungi, label: "Emel atau pautan untuk dihubungi (pilihan)", widget: string, required: false }
+          - name: infaq
+            label: "Bahagian Infaq (di bawah setiap halaman)"
+            widget: object
+            collapsed: false
+            fields:
+              - { name: aktif, label: "Paparkan bahagian infaq", widget: boolean, default: true }
+              - { name: tajuk, label: "Tajuk", widget: string }
+              - { name: teks, label: "Teks ajakan", widget: text, required: false }
+              - { name: qr, label: "Gambar kod QR", widget: image, required: false }
+              - { name: bank, label: "Nama bank", widget: string, required: false }
+              - { name: nama_akaun, label: "Nama pemegang akaun", widget: string, required: false }
+              - { name: no_akaun, label: "No. akaun", widget: string, required: false }
+              - { name: rujukan, label: "Rujukan bayaran", widget: string, required: false }
+              - { name: pautan, label: "Pautan infaq online (contoh ToyyibPay)", widget: string, required: false }
+              - { name: pautan_label, label: "Teks butang pautan", widget: string, required: false }

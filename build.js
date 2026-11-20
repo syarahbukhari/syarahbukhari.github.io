@@ -106,6 +106,42 @@ const ICON = {
   share: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
 };
 
+// ---------- infaq ----------
+const INFAQ = tetapan.infaq || {};
+function infaqSection(base) {
+  if (!INFAQ.aktif) return '';
+  const qr = media(INFAQ.qr, base);
+  const row = (label, val, copy) =>
+    val ? `<div class="infaq-row"><dt>${label}</dt><dd><span>${esc(val)}</span>${copy ? `<button type="button" class="copy" data-copy="${esc(val)}">Salin</button>` : ''}</dd></div>` : '';
+  return `
+<section class="infaq" id="infaq">
+  <div class="wrap infaq-in">
+    <div class="infaq-text">
+      <p class="kitab-no">Infaq</p>
+      <h2>${esc(INFAQ.tajuk || 'Infaq')}</h2>
+      ${INFAQ.teks ? paras(INFAQ.teks) : ''}
+      <dl class="infaq-bank">
+        ${row('Bank', INFAQ.bank)}
+        ${row('Nama akaun', INFAQ.nama_akaun)}
+        ${row('No. akaun', INFAQ.no_akaun, true)}
+        ${row('Rujukan', INFAQ.rujukan, true)}
+      </dl>
+      ${INFAQ.pautan ? `<a class="btn btn-plum" href="${esc(INFAQ.pautan)}" target="_blank" rel="noopener">${esc(INFAQ.pautan_label || 'Infaq secara online')} →</a>` : ''}
+    </div>
+    ${qr ? `<figure class="infaq-qr">
+      <a href="${esc(qr)}" target="_blank" rel="noopener"><img src="${esc(qr)}" alt="Kod QR DuitNow untuk infaq" width="260" height="257" loading="lazy" style="width:260px;max-width:100%;height:auto"></a>
+      <figcaption>Imbas dengan aplikasi bank atau e-wallet.<br><a href="${esc(qr)}" download="QR-Infaq-Teratak-Hadits.jpg">Simpan gambar QR</a> untuk imbas dari galeri.</figcaption>
+    </figure>` : ''}
+  </div>
+</section>
+<script>
+document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click',function(){
+  var t=b.dataset.copy, done=function(){b.textContent='Disalin ✓';setTimeout(function(){b.textContent='Salin';},1800);};
+  if(navigator.clipboard){navigator.clipboard.writeText(t).then(done,function(){prompt('Salin:',t);});}else{prompt('Salin:',t);}
+});});
+</script>`;
+}
+
 function layout({ base, title, desc, body, image = '', extraHead = '' }) {
   const fullTitle = title ? `${title} · ${SITE}` : SITE;
   return `<!doctype html>
@@ -130,12 +166,13 @@ ${extraHead}
 <header class="topbar">
   <div class="wrap topbar-in">
     <a class="brand" href="${base}index.html"><span class="brand-mark">${ICON.book}</span>${esc(SITE)}</a>
-    <nav><a href="${base}index.html#kitab">Kitab</a><a href="${base}index.html#tentang">Tentang</a></nav>
+    <nav><a href="${base}index.html#kitab">Kitab</a><a href="${base}index.html#tentang">Tentang</a>${INFAQ.aktif ? '<a href="#infaq" class="nav-infaq">Infaq</a>' : ''}</nav>
   </div>
 </header>
 <main>
 ${body}
 </main>
+${infaqSection(base)}
 <footer class="foot">
   <div class="wrap">
     <p class="foot-name">${esc(SITE)}</p>

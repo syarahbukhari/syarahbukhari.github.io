@@ -177,9 +177,38 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.2; marg
 .pager small { font: 500 .78rem var(--sans); color: var(--muted); margin-bottom: 2px; }
 .pager-r { text-align: right; }
 
+/* ---------- infaq ---------- */
+.infaq { background: var(--paper); border-top: 1px solid var(--lavender-line); }
+.infaq-in { display: grid; gap: 32px; align-items: center; padding-top: 48px; padding-bottom: 48px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .infaq-in { grid-template-columns: 1fr 300px; } }
+.infaq h2 { color: var(--plum-deep); font-size: 1.6rem; margin-bottom: 12px; }
+.infaq-text > p { margin: 0 0 1em; }
+.infaq-text > p.kitab-no { margin-bottom: 4px; }
+.infaq-bank { margin: 20px 0 22px; background: var(--lavender-soft); border-radius: var(--radius); padding: 6px 16px; }
+.infaq-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--lavender-line); }
+.infaq-row:last-child { border-bottom: 0; }
+.infaq-row dt { color: var(--muted); font-size: .85rem; flex: none; }
+.infaq-row dd { margin: 0; display: flex; align-items: center; gap: 10px; text-align: right; font-weight: 600; color: var(--plum-deep); word-break: break-word; }
+.copy { font: 600 .75rem var(--sans); color: var(--plum); background: var(--paper); border: 1px solid var(--lavender); border-radius: 999px; padding: 4px 10px; cursor: pointer; flex: none; }
+.copy:hover { background: var(--offwhite); }
+.infaq-qr { margin: 0; text-align: center; }
+.infaq-qr img { margin: 0 auto; border-radius: 16px; box-shadow: var(--shadow); }
+.infaq-qr figcaption { margin-top: 12px; font-size: .85rem; color: var(--muted); }
+.nav-infaq { background: var(--plum); color: var(--offwhite) !important; }
+.nav-infaq:hover { background: var(--plum-deep) !important; }
+
 /* ---------- footer ---------- */
 .foot { background: var(--plum-deep); color: rgba(250, 247, 242, .78); padding: 36px 0; font-size: .9rem; }
 .foot p { margin: 0 0 6px; }
 .foot a { color: var(--lavender); }
 .foot-name { font: 600 1.2rem var(--serif); color: var(--offwhite); margin-bottom: 10px !important; }
 .foot-small { font-size: .8rem; color: rgba(250, 247, 242, .55); margin-top: 14px !important; }
+
+/* telefon kecil */
+section[id] { scroll-margin-top: 72px; }
+@media (max-width: 440px) {
+  .brand { font-size: 1.02rem; gap: 8px; }
+  .brand-mark { width: 28px; height: 28px; font-size: 16px; }
+  .topbar nav a { padding: 6px 7px; font-size: .86rem; }
+}
+@media (max-width: 359px) { .topbar nav a[href$="#tentang"] { display: none; } }
