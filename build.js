@@ -42,8 +42,12 @@ function youtubeId(url = '') {
 const media = (p, base) => {
   if (!p) return '';
   if (/^https?:\/\//i.test(p)) return p;
-  return base + String(p).replace(/^\/+/, '');
+  return base + String(p).replace(/^\/+/, '').split('/').map(encodeURIComponent).join('/');
 };
+
+// Alamat penuh laman (diisi oleh GitHub Actions) untuk pratonton pautan WhatsApp/Facebook
+const SITE_URL = (process.env.SITE_URL || '').replace(/\/+$/, '');
+const absMedia = (p) => (!p ? '' : /^https?:\/\//i.test(p) ? p : SITE_URL ? media(p, SITE_URL + '/') : '');
 
 function copyDir(src, dest) {
   if (!fs.existsSync(src)) return;
@@ -81,7 +85,7 @@ const kitabList = fs
         let n = 2;
         while (used.has(s)) s = `${slugify(e.tajuk)}-${n++}`;
         used.add(s);
-        return { ...e, slug: s, vid: youtubeId(e.youtube) };
+        return { ...e, slug: s, vid: youtubeId(e.youtube), short: /\/shorts\//.test(e.youtube || '') };
       });
     return { ...data, slug, ebooks };
   })
@@ -96,7 +100,7 @@ const ICON = {
   share: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
 };
 
-function layout({ base, title, desc, body, extraHead = '' }) {
+function layout({ base, title, desc, body, image = '', extraHead = '' }) {
   const fullTitle = title ? `${title} · ${SITE}` : SITE;
   return `<!doctype html>
 <html lang="ms">
@@ -107,7 +111,7 @@ function layout({ base, title, desc, body, extraHead = '' }) {
 <meta name="description" content="${esc(desc || tetapan.slogan)}">
 <meta property="og:title" content="${esc(fullTitle)}">
 <meta property="og:description" content="${esc(desc || tetapan.slogan)}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="website">${image ? `\n<meta property="og:image" content="${esc(image)}">\n<meta name="twitter:card" content="summary_large_image">` : ''}
 <meta name="theme-color" content="#5a2650">
 <link rel="icon" href="${base}assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -140,7 +144,9 @@ ${body}
 
 const ebookCard = (k, e, i, base) => `
 <a class="ecard" href="${base}kitab/${k.slug}/${e.slug}/index.html" data-search="${esc(`${e.tajuk} ${e.subtajuk || ''} ${k.tajuk}`.toLowerCase())}">
-  <span class="ecard-num">${String(i + 1).padStart(2, '0')}</span>
+  ${e.kulit
+    ? `<span class="ecard-cover"><img src="${esc(media(e.kulit, base))}" alt="" loading="lazy"><span class="ecard-badge">${String(i + 1).padStart(2, '0')}</span></span>`
+    : `<span class="ecard-num">${String(i + 1).padStart(2, '0')}</span>`}
   <span class="ecard-body">
     <span class="ecard-kitab">${esc(k.tajuk)}</span>
     <span class="ecard-title">${esc(e.tajuk)}</span>
@@ -259,7 +265,7 @@ function ebookPage(k, e, i) {
   const desc = e.ringkasan || e.subtajuk || `${e.tajuk}, ${k.tajuk}. Ebook dan video penerangan percuma.`;
 
   const video = e.vid
-    ? `<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/${e.vid}?rel=0" title="Video: ${esc(e.tajuk)}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`
+    ? `<div class="video${e.short ? ' video-short' : ''}"><iframe src="https://www.youtube-nocookie.com/embed/${e.vid}?rel=0" title="Video: ${esc(e.tajuk)}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`
     : `<div class="video video-empty"><span class="ve-icon">${ICON.play}</span><p>Video penerangan akan datang, insya-Allah.</p></div>`;
 
   const reader = pdf
@@ -303,7 +309,7 @@ function ebookPage(k, e, i) {
 </script>
 ${pdf ? `<script type="module" src="${base}assets/reader.js"></script>` : ''}`;
 
-  write(`kitab/${k.slug}/${e.slug}/index.html`, layout({ base, title, desc, body }));
+  write(`kitab/${k.slug}/${e.slug}/index.html`, layout({ base, title, desc, body, image: absMedia(e.kulit) }));
 }
 
 // ---------- 404 ----------
