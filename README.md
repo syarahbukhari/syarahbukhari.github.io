@@ -21,7 +21,7 @@ Laman akan dibina dan diterbitkan semula secara automatik (GitHub Actions) setia
 
 1. Gabungkan (merge) kod ini ke cawangan `main`.
 2. Di GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-3. Laman akan tersedia di `https://<nama-akaun>.github.io/<nama-repo>/`.
+3. Laman akan tersedia di https://syarahbukhari.github.io/
    Domain sendiri (contoh `syarahbukhari.com`) boleh ditetapkan di halaman yang sama.
 
 > Nota: GitHub Pages percuma untuk repo **public**. Untuk repo private, perlu pelan GitHub berbayar.

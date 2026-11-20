@@ -2,7 +2,7 @@
 # Setiap simpanan di panel admin akan dicommit ke GitHub dan laman akan dibina semula secara automatik.
 backend:
   name: github
-  repo: yazidtamiey-claude/video-claudee
+  repo: syarahbukhari/syarahbukhari.github.io
   branch: main
 
 locale: en
