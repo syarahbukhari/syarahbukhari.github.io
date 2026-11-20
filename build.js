@@ -46,6 +46,12 @@ const media = (p, base) => {
 };
 
 // Alamat penuh laman (diisi oleh GitHub Actions) untuk pratonton pautan WhatsApp/Facebook
+// Versi aset (cap jari kandungan) supaya browser tidak guna fail CSS/JS lama dalam cache
+const crypto = require('crypto');
+const ver = (f) => crypto.createHash('md5').update(fs.readFileSync(path.join(ROOT, f))).digest('hex').slice(0, 8);
+const V_CSS = ver('assets/style.css');
+const V_JS = ver('assets/reader.js');
+
 const SITE_URL = (process.env.SITE_URL || '').replace(/\/+$/, '');
 const absMedia = (p) => (!p ? '' : /^https?:\/\//i.test(p) ? p : SITE_URL ? media(p, SITE_URL + '/') : '');
 
@@ -117,7 +123,7 @@ function layout({ base, title, desc, body, image = '', extraHead = '' }) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${base}assets/style.css">
+<link rel="stylesheet" href="${base}assets/style.css?v=${V_CSS}">
 ${extraHead}
 </head>
 <body>
@@ -145,7 +151,7 @@ ${body}
 const ebookCard = (k, e, i, base) => `
 <a class="ecard" href="${base}kitab/${k.slug}/${e.slug}/index.html" data-search="${esc(`${e.tajuk} ${e.subtajuk || ''} ${k.tajuk}`.toLowerCase())}">
   ${e.kulit
-    ? `<span class="ecard-cover"><img src="${esc(media(e.kulit, base))}" alt="" loading="lazy"><span class="ecard-badge">${String(i + 1).padStart(2, '0')}</span></span>`
+    ? `<span class="ecard-cover"><img src="${esc(media(e.kulit, base))}" alt="" width="76" height="122" loading="lazy" style="width:76px;height:auto;max-width:100%"><span class="ecard-badge">${String(i + 1).padStart(2, '0')}</span></span>`
     : `<span class="ecard-num">${String(i + 1).padStart(2, '0')}</span>`}
   <span class="ecard-body">
     <span class="ecard-kitab">${esc(k.tajuk)}</span>
@@ -307,7 +313,7 @@ function ebookPage(k, e, i) {
 <script>
 (function(){var a=document.getElementById('kongsi');if(a)a.href='https://wa.me/?text='+encodeURIComponent(a.dataset.text+'\\n'+location.href);})();
 </script>
-${pdf ? `<script type="module" src="${base}assets/reader.js"></script>` : ''}`;
+${pdf ? `<script type="module" src="${base}assets/reader.js?v=${V_JS}"></script>` : ''}`;
 
   write(`kitab/${k.slug}/${e.slug}/index.html`, layout({ base, title, desc, body, image: absMedia(e.kulit) }));
 }
