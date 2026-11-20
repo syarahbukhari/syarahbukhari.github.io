@@ -1,0 +1,13 @@
+{
+  "urutan": 1,
+  "tajuk": "Kitab Wahyu",
+  "tajuk_arab": "كتاب بدء الوحي",
+  "penerangan": "Kitab pertama dalam Sahih al-Bukhari, tentang permulaan turunnya wahyu kepada Rasulullah ﷺ.",
+  "ebooks": [
+    { "tajuk": "Muqaddimah", "subtajuk": "Pengenalan Kitab Wahyu", "ringkasan": "", "pdf": "", "youtube": "", "kulit": "", "terbit": true },
+    { "tajuk": "Hadis Pertama", "subtajuk": "", "ringkasan": "", "pdf": "", "youtube": "", "kulit": "", "terbit": true },
+    { "tajuk": "Hadis Kedua", "subtajuk": "", "ringkasan": "", "pdf": "", "youtube": "", "kulit": "", "terbit": true },
+    { "tajuk": "Hadis Ketiga", "subtajuk": "", "ringkasan": "", "pdf": "", "youtube": "", "kulit": "", "terbit": true },
+    { "tajuk": "Hadis Keempat", "subtajuk": "", "ringkasan": "", "pdf": "", "youtube": "", "kulit": "", "terbit": true }
+  ]
+}

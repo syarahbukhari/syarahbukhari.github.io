@@ -1,0 +1,99 @@
+# Konfigurasi panel admin (Sveltia CMS).
+# Setiap simpanan di panel admin akan dicommit ke GitHub dan laman akan dibina semula secara automatik.
+backend:
+  name: github
+  repo: yazidtamiey-claude/video-claudee
+  branch: main
+
+locale: en
+media_folder: uploads
+public_folder: /uploads
+
+collections:
+  - name: kitab
+    label: Kitab
+    label_singular: Kitab
+    description: "Setiap Kitab (tajuk besar) mengandungi senarai ebook. Tambah ebook baharu dengan membuka Kitab berkenaan dan tekan 'Add Ebook' di bahagian Senarai Ebook."
+    folder: content/kitab
+    format: json
+    extension: json
+    create: true
+    delete: true
+    identifier_field: tajuk
+    slug: "{{slug}}"
+    summary: "{{urutan}}. {{tajuk}}"
+    sortable_fields: [urutan, tajuk]
+    fields:
+      - name: urutan
+        label: "No. urutan kitab"
+        widget: number
+        value_type: int
+        min: 1
+        hint: "Menentukan susunan kitab di laman utama (1 = paling atas)."
+      - name: tajuk
+        label: "Tajuk kitab"
+        widget: string
+        hint: "Contoh: Kitab Wahyu. Alamat URL kitab dijana daripada tajuk semasa kitab mula dicipta."
+      - name: tajuk_arab
+        label: "Tajuk dalam Bahasa Arab"
+        widget: string
+        required: false
+      - name: penerangan
+        label: "Penerangan ringkas kitab"
+        widget: text
+        required: false
+      - name: ebooks
+        label: "Senarai Ebook"
+        label_singular: Ebook
+        widget: list
+        collapsed: true
+        summary: "{{fields.tajuk}}"
+        hint: "Susunan di sini = susunan di laman. Seret untuk ubah susunan."
+        fields:
+          - name: tajuk
+            label: "Tajuk ebook"
+            widget: string
+            hint: "Contoh: Muqaddimah, Hadis Pertama, Hadis Kelima. Jangan ubah selepas dikongsi kerana alamat URL dijana daripada tajuk."
+          - name: subtajuk
+            label: "Tema / subtajuk"
+            widget: string
+            required: false
+            hint: "Contoh: Amalan Bergantung kepada Niat"
+          - name: ringkasan
+            label: "Ringkasan pendek"
+            widget: text
+            required: false
+          - name: pdf
+            label: "Fail PDF ebook"
+            widget: file
+            required: false
+            hint: "Muat naik fail PDF. Jika kosong, laman akan papar 'Ebook akan dimuat naik'."
+          - name: youtube
+            label: "Pautan video YouTube"
+            widget: string
+            required: false
+            hint: "Tampal pautan penuh, contoh: https://youtu.be/xxxxxxxxxxx. Jika kosong, laman akan papar 'Video akan datang'."
+          - name: kulit
+            label: "Gambar kulit ebook (pilihan)"
+            widget: image
+            required: false
+          - name: terbit
+            label: "Paparkan di laman"
+            widget: boolean
+            default: true
+            required: false
+            hint: "Matikan untuk sembunyikan sementara (draf)."
+
+  - name: tetapan
+    label: Tetapan Laman
+    files:
+      - name: umum
+        label: Tetapan Umum
+        file: content/tetapan.json
+        format: json
+        fields:
+          - { name: nama_laman, label: "Nama laman", widget: string }
+          - { name: slogan, label: "Slogan (di bawah nama)", widget: text }
+          - { name: pengenalan, label: "Teks pengenalan (laman utama)", widget: text }
+          - { name: kredit, label: "Kredit / penerbit", widget: string }
+          - { name: hubungi, label: "Emel atau pautan untuk dihubungi (pilihan)", widget: string, required: false }
