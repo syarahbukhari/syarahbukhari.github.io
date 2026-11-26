@@ -42,6 +42,16 @@ collections:
         label: "Penerangan ringkas kitab"
         widget: text
         required: false
+      - name: kuliah_url
+        label: "Pautan kuliah YouTube kitab ini (pilihan)"
+        widget: string
+        required: false
+        hint: "Pautan saluran atau playlist rakaman kuliah Maulana Asri untuk kitab ini. Dipaparkan sebelum bahagian infaq."
+      - name: kuliah_label
+        label: "Teks pautan kuliah (pilihan)"
+        widget: string
+        required: false
+        hint: "Jika kosong: 'Kuliah <tajuk kitab>'"
       - name: ebooks
         label: "Senarai Ebook"
         label_singular: Ebook
@@ -97,6 +107,15 @@ collections:
           - { name: pengenalan, label: "Teks pengenalan (laman utama)", widget: text }
           - { name: kredit, label: "Kredit / penerbit", widget: string }
           - { name: hubungi, label: "Emel atau pautan untuk dihubungi (pilihan)", widget: string, required: false }
+          - name: kuliah
+            label: "Bahagian Kuliah (sebelum Infaq)"
+            widget: object
+            collapsed: true
+            hint: "Pautan kuliah ditetapkan pada setiap Kitab."
+            fields:
+              - { name: aktif, label: "Paparkan bahagian kuliah", widget: boolean, default: true }
+              - { name: tajuk, label: "Tajuk", widget: string }
+              - { name: teks, label: "Teks", widget: text, required: false }
           - name: infaq
             label: "Bahagian Infaq (di bawah setiap halaman)"
             widget: object

@@ -177,6 +177,22 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.2; marg
 .pager small { font: 500 .78rem var(--sans); color: var(--muted); margin-bottom: 2px; }
 .pager-r { text-align: right; }
 
+/* ---------- kuliah ---------- */
+.kuliah { background: var(--lavender-soft); border-top: 1px solid var(--lavender-line); }
+.kuliah-in { display: grid; gap: 24px; align-items: center; padding-top: 44px; padding-bottom: 44px; }
+@media (min-width: 760px) { .kuliah-in { grid-template-columns: 1fr 1fr; gap: 40px; } }
+.kuliah h2 { color: var(--plum-deep); font-size: 1.6rem; margin-bottom: 12px; }
+.kuliah-in p:not(.kitab-no) { margin: 0 0 1em; }
+.kuliah-in p.kitab-no { margin-bottom: 4px; }
+.kuliah-list { display: grid; gap: 12px; }
+.kuliah-item { display: flex; align-items: center; gap: 14px; padding: 16px; background: var(--paper); border: 1px solid var(--lavender-line); border-radius: var(--radius); text-decoration: none; color: var(--ink); box-shadow: var(--shadow); transition: transform .15s, border-color .15s; }
+.kuliah-item:hover { transform: translateY(-2px); border-color: var(--lavender); }
+.kuliah-yt { flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 12px; background: #fdecec; color: #e02020; font-size: 26px; }
+.kuliah-body { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.kuliah-body small { color: var(--muted); font-size: .78rem; }
+.kuliah-body b { font: 600 1.05rem var(--serif); color: var(--plum-deep); }
+.kuliah-go { flex: none; font-weight: 600; font-size: .88rem; color: var(--plum); }
+
 /* ---------- infaq ---------- */
 .infaq { background: var(--paper); border-top: 1px solid var(--lavender-line); }
 .infaq-in { display: grid; gap: 32px; align-items: center; padding-top: 48px; padding-bottom: 48px; grid-template-columns: 1fr; }

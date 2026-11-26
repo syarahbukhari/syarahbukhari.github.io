@@ -107,6 +107,32 @@ const ICON = {
   share: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
 };
 
+// ---------- kuliah ----------
+const KULIAH = tetapan.kuliah || {};
+function kuliahSection(base, kitab) {
+  if (!KULIAH.aktif) return '';
+  // Di halaman kitab/ebook: kuliah kitab itu sahaja. Di laman utama: semua kitab yang ada pautan kuliah.
+  const list = (kitab ? [kitab] : kitabList).filter((k) => k.kuliah_url);
+  if (!list.length) return '';
+  const item = (k) => `
+      <a class="kuliah-item" href="${esc(k.kuliah_url)}" target="_blank" rel="noopener">
+        <span class="kuliah-yt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8z" fill="currentColor"/><path d="M9.8 15.3V8.7l5.7 3.3z" fill="#fff"/></svg></span>
+        <span class="kuliah-body"><small>Siri kuliah YouTube</small><b>${esc(k.kuliah_label || 'Kuliah ' + k.tajuk)}</b></span>
+        <span class="kuliah-go">Tonton →</span>
+      </a>`;
+  return `
+<section class="kuliah" id="kuliah">
+  <div class="wrap kuliah-in">
+    <div>
+      <p class="kitab-no">Kuliah</p>
+      <h2>${esc(KULIAH.tajuk || 'Kuliah')}</h2>
+      ${KULIAH.teks ? paras(KULIAH.teks) : ''}
+    </div>
+    <div class="kuliah-list">${list.map(item).join('')}</div>
+  </div>
+</section>`;
+}
+
 // ---------- infaq ----------
 const INFAQ = tetapan.infaq || {};
 function infaqSection(base) {
@@ -143,7 +169,7 @@ document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click
 </script>`;
 }
 
-function layout({ base, title, desc, body, image = '', extraHead = '' }) {
+function layout({ base, title, desc, body, image = '', kitab = null, extraHead = '' }) {
   const fullTitle = title ? `${title} · ${SITE}` : SITE;
   return `<!doctype html>
 <html lang="ms">
@@ -173,6 +199,7 @@ ${extraHead}
 <main>
 ${body}
 </main>
+${kuliahSection(base, kitab)}
 ${infaqSection(base)}
 <footer class="foot">
   <div class="wrap">
@@ -295,7 +322,7 @@ function kitabPage(k) {
     ${k.ebooks.map((e, i) => ebookCard(k, e, i, base)).join('') || '<p class="empty">Ebook akan dimuat naik tidak lama lagi.</p>'}
   </div>
 </section>`;
-  write(`kitab/${k.slug}/index.html`, layout({ base, title: k.tajuk, desc: k.penerangan, body }));
+  write(`kitab/${k.slug}/index.html`, layout({ base, title: k.tajuk, desc: k.penerangan, body, kitab: k }));
 }
 
 // ---------- laman ebook ----------
@@ -354,7 +381,7 @@ function ebookPage(k, e, i) {
 </script>
 ${pdf ? `<script type="module" src="${base}assets/reader.js?v=${V_JS}"></script>` : ''}`;
 
-  write(`kitab/${k.slug}/${e.slug}/index.html`, layout({ base, title, desc, body, image: absMedia(e.kulit) }));
+  write(`kitab/${k.slug}/${e.slug}/index.html`, layout({ base, title, desc, body, image: absMedia(e.kulit), kitab: k }));
 }
 
 // ---------- 404 ----------
