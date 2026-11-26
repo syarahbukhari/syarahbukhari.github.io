@@ -3,6 +3,8 @@
   "tajuk": "Kitab Wahyu",
   "tajuk_arab": "كتاب الوحي",
   "penerangan": "Kitab pertama dalam Sahih al-Bukhari, tentang permulaan turunnya wahyu kepada Rasulullah ﷺ.",
+  "kuliah_url": "https://www.youtube.com/@sahihbukhari-kitabwahyu-lb4700/videos",
+  "kuliah_label": "",
   "ebooks": [
     {
       "tajuk": "Muqaddimah",
@@ -27,7 +29,7 @@
       "subtajuk": "Bagaimanakah Wahyu Datang Kepadamu",
       "ringkasan": "",
       "pdf": "/uploads/Hadis Kedua Shahih Bukhari (2).pdf",
-      "youtube": "",
+      "youtube": "https://youtu.be/RVJotuluhYo?si=JlHVXnT0r1vubVQh",
       "kulit": "/uploads/1000334041.jpg",
       "terbit": true
     },
@@ -67,6 +69,5 @@
       "kulit": "/uploads/1000337887.png",
       "terbit": true
     }
-  ],
-  "kuliah_url": "https://www.youtube.com/@sahihbukhari-kitabwahyu-lb4700/videos"
+  ]
 }
