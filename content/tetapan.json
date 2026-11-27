@@ -19,6 +19,11 @@
     "no_akaun": "553104586916",
     "rujukan": "INFAQ TERATAK HADITS",
     "pautan": "https://toyyibpay.com/Infaq-Kuliah",
-    "pautan_label": "Infaq secara online"
+    "pautan_label": "Infaq secara online",
+    "peringatan_aktif": true,
+    "peringatan_tajuk": "Bantu kerja dakwah Teratak Hadits",
+    "peringatan_teks": "Ebook dan video ini percuma untuk semua. Infaq tuan/puan membantu Teratak Hadits terus menyebarkan ilmu hadis.",
+    "peringatan_saat": 15,
+    "peringatan_hari": 3
   }
 }

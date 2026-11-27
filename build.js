@@ -161,6 +161,37 @@ function infaqSection(base) {
     </figure>` : ''}
   </div>
 </section>
+${INFAQ.peringatan_aktif ? `
+<div class="nudge" id="nudge" role="dialog" aria-labelledby="nudge-t" hidden>
+  <button type="button" class="nudge-x" id="nudge-x" aria-label="Tutup">✕</button>
+  <p class="nudge-t" id="nudge-t">${esc(INFAQ.peringatan_tajuk || 'Sokong kami')}</p>
+  ${INFAQ.peringatan_teks ? `<p class="nudge-p">${esc(INFAQ.peringatan_teks)}</p>` : ''}
+  <div class="nudge-btns">
+    <a class="btn btn-plum" href="#infaq" id="nudge-go">Infaq sekarang</a>
+    <button type="button" class="btn btn-ghost" id="nudge-later">Nanti</button>
+  </div>
+</div>
+<script>
+(function(){
+  var KEY='sb-infaq-tutup', DAYS=${Number(INFAQ.peringatan_hari) || 3}, DELAY=${Math.max(0, Number(INFAQ.peringatan_saat) || 15)}*1000;
+  var n=document.getElementById('nudge'), infaq=document.getElementById('infaq'), seenInfaq=false;
+  function get(){try{return +localStorage.getItem(KEY)||0;}catch(e){return 0;}}
+  function set(){try{localStorage.setItem(KEY,Date.now());}catch(e){}}
+  if(Date.now()-get() < DAYS*864e5) return;
+  if('IntersectionObserver' in window && infaq){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){seenInfaq=true;hide();}});}).observe(infaq);}
+  function hide(){n.classList.remove('show');setTimeout(function(){n.hidden=true;},300);}
+  function close(){set();hide();}
+  function show(){
+    if(seenInfaq) return;
+    if(document.querySelector('.reader-wrap.is-full')){setTimeout(show,5000);return;}
+    n.hidden=false;requestAnimationFrame(function(){n.classList.add('show');});
+  }
+  document.getElementById('nudge-x').onclick=close;
+  document.getElementById('nudge-later').onclick=close;
+  document.getElementById('nudge-go').onclick=function(){set();hide();};
+  setTimeout(show,DELAY);
+})();
+</script>` : ''}
 <script>
 document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click',function(){
   var t=b.dataset.copy, done=function(){b.textContent='Disalin ✓';setTimeout(function(){b.textContent='Salin';},1800);};

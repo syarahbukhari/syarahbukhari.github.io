@@ -131,3 +131,8 @@ collections:
               - { name: rujukan, label: "Rujukan bayaran", widget: string, required: false }
               - { name: pautan, label: "Pautan infaq online (contoh ToyyibPay)", widget: string, required: false }
               - { name: pautan_label, label: "Teks butang pautan", widget: string, required: false }
+              - { name: peringatan_aktif, label: "Papar peringatan infaq (kotak kecil di bawah skrin)", widget: boolean, default: true, required: false }
+              - { name: peringatan_tajuk, label: "Peringatan: tajuk", widget: string, required: false }
+              - { name: peringatan_teks, label: "Peringatan: teks", widget: text, required: false }
+              - { name: peringatan_saat, label: "Peringatan: muncul selepas berapa saat", widget: number, value_type: int, min: 0, default: 15, required: false }
+              - { name: peringatan_hari, label: "Peringatan: selepas ditutup, jangan papar semula selama berapa hari", widget: number, value_type: int, min: 1, default: 3, required: false }
