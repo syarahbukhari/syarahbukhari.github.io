@@ -112,12 +112,16 @@ const KULIAH = tetapan.kuliah || {};
 function kuliahSection(base, kitab) {
   if (!KULIAH.aktif) return '';
   // Di halaman kitab/ebook: kuliah kitab itu sahaja. Di laman utama: semua kitab yang ada pautan kuliah.
-  const list = (kitab ? [kitab] : kitabList).filter((k) => k.kuliah_url);
+  const list = (kitab ? [kitab] : kitabList)
+    .filter((k) => k.kuliah_url)
+    .map((k) => ({ url: k.kuliah_url, label: k.kuliah_label || 'Kuliah ' + k.tajuk, kecil: 'Siri kuliah YouTube' }));
+  // Pautan tambahan (semua halaman), dipapar selepas kuliah kitab
+  for (const t of KULIAH.tambahan || []) if (t && t.url) list.push({ url: t.url, label: t.label || 'Kuliah', kecil: t.kecil || 'YouTube' });
   if (!list.length) return '';
   const item = (k) => `
-      <a class="kuliah-item" href="${esc(k.kuliah_url)}" target="_blank" rel="noopener">
+      <a class="kuliah-item" href="${esc(k.url)}" target="_blank" rel="noopener">
         <span class="kuliah-yt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8z" fill="currentColor"/><path d="M9.8 15.3V8.7l5.7 3.3z" fill="#fff"/></svg></span>
-        <span class="kuliah-body"><small>Siri kuliah YouTube</small><b>${esc(k.kuliah_label || 'Kuliah ' + k.tajuk)}</b></span>
+        <span class="kuliah-body"><small>${esc(k.kecil)}</small><b>${esc(k.label)}</b></span>
         <span class="kuliah-go">Tonton →</span>
       </a>`;
   return `

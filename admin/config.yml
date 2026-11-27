@@ -116,6 +116,16 @@ collections:
               - { name: aktif, label: "Paparkan bahagian kuliah", widget: boolean, default: true }
               - { name: tajuk, label: "Tajuk", widget: string }
               - { name: teks, label: "Teks", widget: text, required: false }
+              - name: tambahan
+                label: "Pautan kuliah tambahan (dipapar di semua halaman, selepas kuliah kitab)"
+                label_singular: Pautan
+                widget: list
+                required: false
+                summary: "{{fields.label}}"
+                fields:
+                  - { name: label, label: "Tajuk pautan", widget: string }
+                  - { name: kecil, label: "Teks kecil di atas tajuk", widget: string, required: false, hint: "Contoh: Playlist YouTube · Teratak Hadits" }
+                  - { name: url, label: "Pautan (URL)", widget: string }
           - name: infaq
             label: "Bahagian Infaq (di bawah setiap halaman)"
             widget: object
